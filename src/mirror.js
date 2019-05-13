@@ -4,7 +4,7 @@ export default class Canvas extends React.Component {
     constructor(props) {
         super(props);
         this.canvasRef = React.createRef();
-        this.state = { isDrawing: false };
+        this.state = {};
     }
 
     componentDidUpdate() {
@@ -49,7 +49,7 @@ export default class Canvas extends React.Component {
         });
     }
 
-    handleMouseDown = 
+    // handleMouseDown =
     render() {
         return (
             <canvas

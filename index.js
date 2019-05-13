@@ -190,103 +190,10 @@ app.post("/bio", (req, res) => {
         });
 });
 
-app.get("/home", (req, res) => {
+app.get("/mirror", (req, res) => {
     console.log("home");
     res.json({ success: true });
 });
-// app.get("/api/user/:id", (req, res) => {
-//     db.getUserInfo(req.params.id)
-//         .then(({ rows }) => {
-//             // console.log("now we're here at GET/user:id", rows);
-//             if (req.params.id == req.session.userId) {
-//                 res.json({
-//                     redirect: true
-//                 });
-//             } else {
-//                 res.json(rows);
-//             }
-//         })
-//         .catch(err => {
-//             console.log("error in server upload", err);
-//         });
-// });
-//
-// app.get("/friendshipbutton/:viewer", (req, res) => {
-//     db.getStatus(req.session.userId, req.params.viewer)
-//         .then(data => {
-//             // console.log("data from index: ", data);
-//             if (data.rows[0]) {
-//                 // console.log("show me data.rows[0]:", data.rows[0]);
-//                 if (data.rows[0].accepted == true) {
-//                     res.json({ buttonText: "Sever Heartline" });
-//                 } else if (req.session.userId == data.rows[0].sender_id) {
-//                     res.json({ buttonText: "Revoke Heartline" });
-//                 } else {
-//                     res.json({ buttonText: "Accept Heartline" });
-//                 }
-//             } else {
-//                 res.json({ buttonText: "Extend Heartline" });
-//             }
-//         })
-//         .catch(err => {
-//             console.log("error in GET/friendshipbutton", err);
-//         });
-// });
-//
-// app.post("/friendshipbutton/:viewer", (req, res) => {
-//     // console.log("are we there yet?", req.body);
-//     if (req.body.buttonText == "Extend Heartline") {
-//         // console.log("about to ADD friend");
-//         db.sendRequest(req.session.userId, req.params.viewer).then(
-//             ({ data }) => {
-//                 res.json({ buttonText: "Revoke Heartline", accepted: false });
-//             }
-//         );
-//     } else if (req.body.buttonText == "Accept Heartline") {
-//         // console.log("about to ACCEPT friend");
-//         // console.log("req.params/Accept Request: ", req.params);
-//         db.acceptRequest(req.session.userId, req.params.viewer).then(
-//             ({ data }) => {
-//                 res.json({ buttonText: "Sever Heartline", accepted: true });
-//             }
-//         );
-//     } else if (req.body.buttonText == "Revoke Heartline") {
-//         // console.log("about to REVOKE request");
-//         db.endFriendship(req.session.userId, req.params.viewer).then(
-//             ({ data }) => {
-//                 res.json({ buttonText: "Extend Heartline", accepted: false });
-//             }
-//         );
-//     } else if (req.body.buttonText == "Sever Heartline") {
-//         // console.log("about to DELETE friend");
-//         db.endFriendship(req.session.userId, req.params.viewer).then(
-//             ({ data }) => {
-//                 res.json({ buttonText: "Extend Heartline", accepted: false });
-//             }
-//         );
-//     }
-// });
-//
-// app.get("/showFriends", (req, res) => {
-//     db.showFriends(req.session.userId, req.params.id).then(data => {
-//         // console.log("data.rows[0]: ", data.rows);
-//         res.json(data.rows);
-//     });
-// });
-//
-// app.post("/friends/accept/:id", (req, res) => {
-//     db.acceptRequest(req.session.userId, req.params.id).then(data => {
-//         console.log("data for friends/accept", data);
-//         res.json(data.rows);
-//     });
-// });
-//
-// app.post("/friends/reject/:id", (req, res) => {
-//     db.endFriendship(req.session.userId, req.params.id).then(data => {
-//         console.log("data for friends/reject", data);
-//         res.json(data.rows);
-//     });
-// });
 
 app.get("/logout", (req, res) => {
     req.session = null;

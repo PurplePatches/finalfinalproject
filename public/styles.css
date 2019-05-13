@@ -15,6 +15,10 @@ body {
 
 a {}
 
+    .navBar {
+        border: 2px yellow solid;
+    }
+
 .mirrorContainer {
     border: 2px green solid;
 }

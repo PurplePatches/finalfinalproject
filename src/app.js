@@ -7,11 +7,8 @@ import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Home from "./home";
 import Clock from "./clock";
-import Mirror from "./mirror";
-// import OtherProfile from "./otherprofile";
-// import Friends from "./friends";
-// import OnlineUsers from "./onlineUsers";
-// import Chat from "./chat";
+// import Mirror from "./mirror";
+import Chat from "./chat";
 import { Link } from "react-router-dom";
 
 export default class App extends React.Component {
@@ -67,7 +64,6 @@ export default class App extends React.Component {
                 <div>
                     <Logo />
                     <Clock />
-                    <Mirror />
                     <ProfilePic
                         firstName={first_name}
                         lastName={last_name}
@@ -89,7 +85,9 @@ export default class App extends React.Component {
                     }
                     <div>
                         {this.state.code && (
-                            <div className="code">{this.state.code}</div>
+                            <div className="code">
+                                This your Couple Code: {this.state.code}
+                            </div>
                         )}
                         {!this.state.code && (
                             <button
@@ -119,14 +117,18 @@ export default class App extends React.Component {
                                 );
                             }}
                         />
-                        {
-                            // <Route exact path="/"
-                            // render={() => {
-                            //     return(
-                            //         <Clock/>
-                            //     )
-                            // }}>
-                        }
+                        <Route
+                            exact
+                            path="/home"
+                            render={() => {
+                                console.log("Home in App");
+                                return (
+                                    <div>
+                                        <Home />
+                                    </div>
+                                );
+                            }}
+                        />
                         {
                             // <Route
                             //     path="/user/:id"
