@@ -1,13 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import Welcome from "./welcome.js";
+import App from "./app.js";
+// import { Provider } from "react-redux";
+// import { composeWithDevTools } from "redux-devtools-extension";
+import { createStore, applyMiddleware } from "redux";
+// import reduxPromise from "redux-promise";
+// import reducer from "./reducers";
+// import { init } from "./socket";
 
-ReactDOM.render(
-    <HelloWorld />,
-    document.querySelector('main')
-);
+// const store = createStore(
+//     reducer,
+//     composeWithDevTools(applyMiddleware(reduxPromise))
+// );
 
-function HelloWorld() {
-    return (
-        <div>Hello, World!</div>
-    );
+let element;
+
+if (location.pathname == "/welcome") {
+    element = <Welcome />;
+} else {
+    element = <App />;
 }
+
+ReactDOM.render(element, document.querySelector("main"));
