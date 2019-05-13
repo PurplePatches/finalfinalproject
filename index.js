@@ -170,26 +170,30 @@ app.post("/invitation", (req, res) => {
         code: code
     });
 });
-//
-// app.post("/bio", (req, res) => {
-//     const bio = req.body.bio;
-//     // console.log("show me req.body: ", req.session, req.body);
-//     db.uploadBio(bio, req.session.userId)
-//         .then(results => {
-//             if (results.rowCount == 1) {
-//                 res.json({
-//                     success: true,
-//                     bio: bio
-//                 });
-//             } else {
-//                 res.json({ err: true });
-//             }
-//         })
-//         .catch(err => {
-//             console.log("error in server upload", err);
-//         });
-// });
-//
+
+app.post("/bio", (req, res) => {
+    const bio = req.body.bio;
+    // console.log("show me req.body: ", req.session, req.body);
+    db.uploadBio(bio, req.session.userId)
+        .then(results => {
+            if (results.rowCount == 1) {
+                res.json({
+                    success: true,
+                    bio: bio
+                });
+            } else {
+                res.json({ err: true });
+            }
+        })
+        .catch(err => {
+            console.log("error in server upload", err);
+        });
+});
+
+app.get("/home", (req, res) => {
+    console.log("home");
+    res.json({ success: true });
+});
 // app.get("/api/user/:id", (req, res) => {
 //     db.getUserInfo(req.params.id)
 //         .then(({ rows }) => {

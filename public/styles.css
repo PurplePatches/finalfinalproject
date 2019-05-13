@@ -1,0 +1,213 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+
+    background-image: url("/bg.jpg");
+    background-size: cover;
+    repeat: no-repeat;
+    background-position: center;
+}
+
+a {}
+
+.mirrorContainer {
+    border: 2px green solid;
+}
+
+.wrapperLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+}
+
+.logo {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 22px 28.48px 3.52px rgba(0, 0, 0, 0.09);
+    width: 138px;
+    height: 135px;
+    margin: auto;
+}
+
+.h1 {
+  font-size: 60px;
+  font-family: "Sacramento", cursive;
+  color: rgb(53, 53, 53);
+  line-height: 0.217;
+  text-align: left;
+}
+
+.h2 {
+    font-size: 18px;
+    font-family: "Roboto";
+    color: rgb(0, 174, 239);
+    line-height: 0.722;
+    text-align: left;
+    color: red;
+}
+
+.body {
+  font-size: 16px;
+  font-family: "Roboto";
+  color: rgb(134, 133, 133);
+  line-height: 1.75;
+  text-align: left;
+}
+.first_name {
+    margin-bottom: 10px;
+}
+
+.pleaseRegister {
+    padding-top: 10px;
+    font-size: 30px;
+}
+
+.profilePic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: 50px;
+    right: 50px;
+    border: 2px red solid;
+}
+
+.error {
+    width: 500px;
+    height: 150px;
+    font-size: 50px;
+    padding-top: 20px;
+}
+
+.imageModal {
+    position: fixed;
+    width: 300px;
+    height:300px;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    clear: both;
+}
+
+.bioAdd,
+.bioEditor {
+    position: absolute;
+    top: 300px;
+    left: 300px;
+    border: 2px red solid;
+}
+
+.showOtherProfile {
+    background: transparent;
+    position: absolute;
+    width: 300px;
+    height:300px;
+    left: 200px;
+    top: 300px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.friends {
+    margin-top: 300px;
+}
+
+.wannabes {
+    background: opacity: 0.6;
+}
+
+.userFriends,
+.userWannabes {
+    background: transparent;
+    background: opacity: 0.6;
+    width: 300px;
+    height:300px;
+}
+
+.friendImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: absolute;
+    left: 75px;
+    top: 100px;
+
+}
+
+.friends {
+    border: 2 px red solid;
+}
+
+.logoutButton {
+    border: transparent;
+    text-decoration: underline;
+    font-size: 20px;
+}
+
+.onlineUsers {
+    background: transparent;
+    background: opacity: 0.6;
+}
+
+.onlineUsersDiv {
+    margin-top: 300px;
+    background: transparent;
+    background: opacity: 0.6;
+}
+
+.button {
+    border: transparent;
+}
+
+
+.form_input {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 22px 28.48px 3.52px rgba(0, 0, 0, 0.09);
+    width: 246px;
+    height: 45px;
+}
+.form_text {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(172, 172, 172);
+    line-height: 3.421;
+    text-align: left;
+}
+
+.box {
+  display: inline-block;
+  background: url("https://cloud.githubusercontent.com/assets/4652816/12771954/41dccb10-ca68-11e5-9db8-a473f51426c8.jpg");
+  background-size: cover;
+}
+
+canvas {
+  background: transparent;
+}
+
+#signUp,
+#logIn {
+    background-color: rgb(241, 78, 149);
+    box-shadow: 0px 22px 28.48px 3.52px rgba(0, 0, 0, 0.09);
+    width: 505px;
+    height: 47px;
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-align: left;
+}
+
+#profileImage img {
+    position: absolute;
+    top: 200px;
+    left: 50px;
+    border: 2px yellow solid;
+}
+
+#friends img {
+    width: 200px;
+    height: 200px
+}

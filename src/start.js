@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Welcome from "./welcome.js";
 import App from "./app.js";
+import Clock from "./clock";
 // import { Provider } from "react-redux";
 // import { composeWithDevTools } from "redux-devtools-extension";
 import { createStore, applyMiddleware } from "redux";
