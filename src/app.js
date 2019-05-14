@@ -79,10 +79,6 @@ export default class App extends React.Component {
                         </button>
                     </a>
                     <Link to="/home">Home</Link>
-                    {
-                        // <Link to="/friends">Friends</Link>
-                        // <Link to="/onlineUsers">OnlineUsers</Link>
-                    }
                     <div>
                         {this.state.code && (
                             <div className="code">
@@ -94,7 +90,7 @@ export default class App extends React.Component {
                                 className="invitationButton"
                                 onClick={e => this.generateInvitation(e)}
                             >
-                                Generate Invitation
+                                Generate Couple Code
                             </button>
                         )}
                         <Route
@@ -123,47 +119,28 @@ export default class App extends React.Component {
                             render={() => {
                                 console.log("Home in App");
                                 return (
-                                    <div>
+                                    <div className="home">
                                         <Home />
                                     </div>
                                 );
                             }}
                         />
                         {
-                            // <Route
-                            //     path="/user/:id"
-                            //     render={props => {
-                            //         return (
-                            //             <OtherProfile
-                            //                 key={props.match.url}
-                            //                 match={props.match}
-                            //                 history={props.history}
-                            //                 firstName={first_name}
-                            //                 lastName={last_name}
-                            //                 image={image}
-                            //                 bio={bio}
-                            //                 user={this.user}
-                            //             />
-                            //         );
-                            //     }}
-                            // />
-                            // <Route path="/friends" component={Friends} />
-                            // <Route path="/onlineUsers" component={OnlineUsers} />
-                        }
-                        {
                             // <Route path="/user/chat" component={Chat} />
                         }
                     </div>
-                    {this.state.isUploaderVisible && (
-                        <Uploader
-                            setUrl={image =>
-                                this.setState({
-                                    image: image,
-                                    isUploaderVisible: false
-                                })
-                            }
-                        />
-                    )}
+                    <div className="uploader1">
+                        {this.state.isUploaderVisible && (
+                            <Uploader
+                                setUrl={image =>
+                                    this.setState({
+                                        image: image,
+                                        isUploaderVisible: false
+                                    })
+                                }
+                            />
+                        )}
+                    </div>
                 </div>
             </BrowserRouter>
         );

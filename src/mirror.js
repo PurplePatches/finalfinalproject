@@ -4,14 +4,13 @@ export default class Canvas extends React.Component {
     constructor(props) {
         super(props);
         this.canvasRef = React.createRef();
-        this.state = {};
     }
 
-    componentDidUpdate() {
+    componentDidMount() {
         const canvas = this.canvasRef.current;
         const ctx = canvas.getContext("2d");
-        var elementOffset = canvas.offset().top;
-        var left = canvas.offset().left;
+        var elementOffset = canvas.offsetTop;
+        var left = canvas.offsetLeft;
         var lastX;
         var lastY;
         var isDrawing;
@@ -29,12 +28,14 @@ export default class Canvas extends React.Component {
         }
 
         $("canvas").on("mousedown", function(e) {
+            console.log("click");
             isDrawing = true;
             lastX = e.offsetX;
             lastY = e.clientY - elementOffset;
         });
 
         $("canvas").on("mousemove", function(e) {
+            console.log("mousemove");
             if (isDrawing) {
                 var x = e.offsetX;
                 var y = e.clientY - elementOffset;
@@ -43,16 +44,18 @@ export default class Canvas extends React.Component {
         });
 
         $("canvas").on("mouseup", function() {
+            console.log("mouseup");
             isDrawing = false;
             var dataURL = document.getElementById("canvas").toDataURL();
             $("#sig").val(dataURL);
         });
     }
 
-    // handleMouseDown =
     render() {
+        console.log("this.canvasRef: ", this.canvasRef);
         return (
             <canvas
+                id="canvas"
                 className="mirrorContainer"
                 width="300"
                 height="300"

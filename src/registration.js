@@ -37,60 +37,66 @@ export default class Registration extends React.Component {
         // console.log("show me this.state: ", this.state);
         return (
             <div id="form">
-                <h1>Welcome to Together Apart</h1>
-                <h2>Stay in touch with your love</h2>
-                <p className="pleaseRegister">Register to enter our site</p>
-                <input
-                    className="first_name"
-                    type="text"
-                    name="first_name"
-                    placeholder="First Name"
-                    autoComplete="off"
-                    onChange={this.saveInput}
-                />
+                <h1 className="welcome">TogetherApart</h1>
+                <p className="reg_body">
+                    Being apart is hard enough. With TogetherApart, you and your
+                    love can stay in touch with real-time chats, or why not
+                    leave them a bathroom mirror note for when they wake up?{" "}
+                </p>
+                <h2>Register to enter our site</h2>
+                <div className="reg_inputs">
+                    <input
+                        className="form_text"
+                        type="text"
+                        name="first_name"
+                        placeholder="First Name"
+                        autoComplete="off"
+                        onChange={this.saveInput}
+                    />
 
-                <input
-                    id="last_name"
-                    type="text"
-                    name="last_name"
-                    placeholder="Last Name"
-                    autoComplete="off"
-                    onChange={this.saveInput}
-                />
-                <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    autoComplete="off"
-                    onChange={this.saveInput}
-                />
+                    <input
+                        className="form_text"
+                        type="text"
+                        name="last_name"
+                        placeholder="Last Name"
+                        autoComplete="off"
+                        onChange={this.saveInput}
+                    />
+                    <input
+                        className="form_text"
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        autoComplete="off"
+                        onChange={this.saveInput}
+                    />
 
-                <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    autoComplete="off"
-                    onChange={this.saveInput}
-                />
+                    <input
+                        className="form_text"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        autoComplete="off"
+                        onChange={this.saveInput}
+                    />
 
-                <input
-                    id="code"
-                    type="text"
-                    name="code"
-                    placeholder="Invitation Code"
-                    autoComplete="off"
-                    onChange={this.saveInput}
-                />
+                    <input
+                        className="form_text"
+                        id="invitation_code"
+                        type="text"
+                        name="code"
+                        placeholder="Invitation Code"
+                        autoComplete="off"
+                        onChange={this.saveInput}
+                    />
+                </div>
                 <input type="hidden" name="_csrf" value="{{csrfToken}}" />
                 <button id="signUp" onClick={e => this.saveData(e)}>
                     Sign up
                 </button>
-                <h2 className="loginText">
-                    Or <Link to="/login">login</Link> if you already have an
-                    account
-                </h2>
+                <p className="reg_body">
+                    Already registered? <Link to="/login">Log in</Link>
+                </p>
             </div>
         );
     }

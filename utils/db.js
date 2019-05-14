@@ -78,48 +78,55 @@ exports.uploadBio = function(bio, id) {
     return db.query(q, params);
 };
 
-exports.getStatus = function(viewer, owner) {
-    console.log("viewer, owner: ", viewer, owner);
-    let q = `SELECT * FROM friendships
-    WHERE (recip_id = $1 AND sender_id = $2)
-    OR (recip_id = $2 AND sender_id = $1);`;
-    let params = [viewer, owner];
+exports.showBothUsers = function(account, id) {
+    let q = `SELECT * FROM users
+    WHERE account = $1 AND id IS NOT $2;`;
+    let params = [account, id];
     return db.query(q, params);
 };
 
-exports.sendRequest = function(viewer, owner) {
-    let q = `INSERT INTO friendships (sender_id, recip_id, accepted)
-    VALUES ($1, $2, false)
-    RETURNING sender_id, recip_id, accepted`;
-    let params = [viewer, owner];
-    return db.query(q, params);
-};
+// exports.getStatus = function(viewer, owner) {
+//     console.log("viewer, owner: ", viewer, owner);
+//     let q = `SELECT * FROM friendships
+//     WHERE (recip_id = $1 AND sender_id = $2)
+//     OR (recip_id = $2 AND sender_id = $1);`;
+//     let params = [viewer, owner];
+//     return db.query(q, params);
+// };
 
-exports.acceptRequest = function(viewer, owner) {
-    let q = `UPDATE friendships SET accepted = true
-    WHERE (recip_id = $1 AND sender_id = $2)
-    OR (recip_id = $2 AND sender_id = $1);`;
-    let params = [viewer, owner];
-    return db.query(q, params);
-};
-
-exports.endFriendship = function(viewer, owner) {
-    let q = `DELETE FROM friendships
-    WHERE (recip_id = $1 AND sender_id = $2)
-    OR (recip_id = $2 AND sender_id = $1);`;
-    let params = [viewer, owner];
-    return db.query(q, params);
-};
-
-exports.showFriends = function(id) {
-    let q = `SELECT users.id, first_name, last_name, image, accepted
-    FROM friendships
-    JOIN users
-    ON (accepted = false AND recip_id = $1 AND sender_id = users.id)
-    OR (accepted = true AND recip_id = $1 AND sender_id = users.id)
-    OR (accepted = true AND sender_id = $1 AND recip_id = users.id)`;
-    return db.query(q, [id]);
-};
+// exports.sendRequest = function(viewer, owner) {
+//     let q = `INSERT INTO friendships (sender_id, recip_id, accepted)
+//     VALUES ($1, $2, false)
+//     RETURNING sender_id, recip_id, accepted`;
+//     let params = [viewer, owner];
+//     return db.query(q, params);
+// };
+//
+// exports.acceptRequest = function(viewer, owner) {
+//     let q = `UPDATE friendships SET accepted = true
+//     WHERE (recip_id = $1 AND sender_id = $2)
+//     OR (recip_id = $2 AND sender_id = $1);`;
+//     let params = [viewer, owner];
+//     return db.query(q, params);
+// };
+//
+// exports.endFriendship = function(viewer, owner) {
+//     let q = `DELETE FROM friendships
+//     WHERE (recip_id = $1 AND sender_id = $2)
+//     OR (recip_id = $2 AND sender_id = $1);`;
+//     let params = [viewer, owner];
+//     return db.query(q, params);
+// };
+//
+// exports.showFriends = function(id) {
+//     let q = `SELECT users.id, first_name, last_name, image, accepted
+//     FROM friendships
+//     JOIN users
+//     ON (accepted = false AND recip_id = $1 AND sender_id = users.id)
+//     OR (accepted = true AND recip_id = $1 AND sender_id = users.id)
+//     OR (accepted = true AND sender_id = $1 AND recip_id = users.id)`;
+//     return db.query(q, [id]);
+// };
 
 exports.getUsersByIds = function(arrayOfIds) {
     console.log("array of ids, db", arrayOfIds);

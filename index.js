@@ -104,6 +104,7 @@ app.post("/login", (req, res) => {
                     req.session.lastName = user.rows[0].last_name;
                     req.session.image = user.rows[0].image;
                     req.session.bio = user.rows[0].bio;
+                    req.session.account = user.rows[0].account;
                     if (isAuthorized == true) {
                         res.json({
                             success: true
@@ -190,10 +191,15 @@ app.post("/bio", (req, res) => {
         });
 });
 
-app.get("/mirror", (req, res) => {
-    console.log("home");
-    res.json({ success: true });
-});
+// app.get("/mirror", (req, res) => {
+//     db.showBothUsers(req.session.account, req.session.userId)
+//         .then(results => {
+//             console.log("results of showboth users: ", results);
+//         })
+//         .catch(err => {
+//             console.log("error in server upload", err);
+//         });
+// });
 
 app.get("/logout", (req, res) => {
     req.session = null;

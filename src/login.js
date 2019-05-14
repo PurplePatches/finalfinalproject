@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -42,8 +43,13 @@ export default class Login extends React.Component {
                         Please enter a valid email and password
                     </div>
                 )}
+                <h1 className="welcome">TogetherApart</h1>
+                <p className="login_body">
+                    Please login with the email address and password you used to
+                    register.
+                </p>
                 <input
-                    id="email"
+                    className="form_text"
                     type="email"
                     name="email"
                     placeholder="Email"
@@ -52,7 +58,7 @@ export default class Login extends React.Component {
                 />
 
                 <input
-                    id="password"
+                    className="form_text"
                     type="password"
                     name="password"
                     placeholder="Password"
@@ -63,6 +69,10 @@ export default class Login extends React.Component {
                 <button id="logIn" onClick={e => this.login(e)}>
                     Login
                 </button>
+                <p className="login_body">
+                    Don't have an account yet? <Link to="/">Register </Link>
+                    here.
+                </p>
             </div>
         );
     }
