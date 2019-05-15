@@ -14,11 +14,24 @@ body {
 
 .myChatDiv {
     border: 2px orange solid;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.singleMessage {
+    border: 1px black solid;
 }
 
 .chatArea {
     width: 500px;
     height: 300px;
+    overflow: scroll;
+}
+
+.chatImage {
+    width: 50px;
+    height: 50px;
 }
 
 .home {

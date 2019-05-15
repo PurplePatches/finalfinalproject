@@ -65,10 +65,11 @@ export default class App extends React.Component {
                     <Logo />
                     <Clock />
                     <div className="navbar">
-                        {" "}
+                        <Link to="/">Profile |</Link>
                         <Link to="/home"> Home |</Link>
                         <Link to="/chat"> Chat |</Link>
-                        <Link to="/mirror"> Mirror | </Link>
+                        <Link to="/mirror"> Mirror |</Link>
+                        <a> Gallery | </a>
                         <a href="/logout">
                             <button className="logoutButton" type="button">
                                 Logout
