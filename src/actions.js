@@ -1,7 +1,7 @@
-// import axios from "./axios";
-// import * as io from "socket.io-client";
-//
-// const socket = io.connect();
+import axios from "./axios";
+import * as io from "socket.io-client";
+
+const socket = io.connect();
 //
 // export async function receiveUsers() {
 //     // console.log("made it to action/receiveUsers");

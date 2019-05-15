@@ -33,23 +33,13 @@ exports.register = function(first_name, last_name, email, code, password) {
         });
     }
 };
+
 exports.createUser = function(first_name, last_name, email, password, account) {
     let q = `INSERT INTO users (first_name, last_name, email, password, account)
     VALUES ($1, $2, $3, $4, $5)
     RETURNING id, first_name, last_name, email, password, account`;
     let params = [first_name, last_name, email, password, account];
     return db.query(q, params);
-};
-
-exports.saveInvitation = function(creator_id, code) {
-    let q = `UPDATE accounts SET code = $2 FROM (SELECT account FROM users WHERE id = $1) AS ACCOUNT WHERE id = ACCOUNT.account;`;
-    let params = [creator_id, code];
-    return db.query(q, params);
-};
-
-exports.getAccountforUser = function(id) {
-    let q = `SELECT * FROM accounts, users WHERE accounts.id = users.account AND users.id = $1`;
-    return db.query(q, [id]);
 };
 
 exports.login = function(email) {
@@ -62,6 +52,12 @@ exports.getUserInfo = function(id) {
     let q = `SELECT * FROM users
     WHERE id = $1`;
     return db.query(q, [id]);
+};
+
+exports.saveInvitation = function(creator_id, code) {
+    let q = `UPDATE accounts SET code = $2 FROM (SELECT account FROM users WHERE id = $1) AS ACCOUNT WHERE id = ACCOUNT.account;`;
+    let params = [creator_id, code];
+    return db.query(q, params);
 };
 
 exports.uploadImage = function(image, id) {
@@ -78,12 +74,25 @@ exports.uploadBio = function(bio, id) {
     return db.query(q, params);
 };
 
-exports.showBothUsers = function(account, id) {
-    let q = `SELECT * FROM users
-    WHERE account = $1 AND id IS NOT $2;`;
-    let params = [account, id];
+exports.getAccountforUser = function(id) {
+    let q = `SELECT * FROM accounts, users WHERE accounts.id = users.account AND users.id = $1`;
+    return db.query(q, [id]);
+};
+
+exports.addDrawing = function(drawing, accountID) {
+    let q = `INSERT INTO accounts (drawing, account_id)
+            VALUES ($1, $2)
+            RETURNING drawing, account_id`;
+    let params = [drawing, accountID];
     return db.query(q, params);
 };
+
+// exports.showBothUsers = function(account, id) {
+//     let q = `SELECT * FROM users
+//     WHERE account = $1 AND id IS NOT $2;`;
+//     let params = [account, id];
+//     return db.query(q, params);
+// };
 
 // exports.getStatus = function(viewer, owner) {
 //     console.log("viewer, owner: ", viewer, owner);
@@ -128,8 +137,8 @@ exports.showBothUsers = function(account, id) {
 //     return db.query(q, [id]);
 // };
 
-exports.getUsersByIds = function(arrayOfIds) {
-    console.log("array of ids, db", arrayOfIds);
-    let q = `SELECT id, first_name, last_name, image FROM users WHERE id = ANY($1)`;
-    return db.query(q, [arrayOfIds]);
-};
+// exports.getUsersByIds = function(arrayOfIds) {
+//     console.log("array of ids, db", arrayOfIds);
+//     let q = `SELECT id, first_name, last_name, image FROM users WHERE id = ANY($1)`;
+//     return db.query(q, [arrayOfIds]);
+// };

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
-// const io = require("socket.io")(server, { origins: "localhost:8080" });
+const io = require("socket.io")(server, { origins: "localhost:8080" });
 const compression = require("compression");
 const db = require("./utils/db");
 const bodyParser = require("body-parser");
@@ -27,9 +27,9 @@ app.use(function(req, res, next) {
     res.cookie("mytoken", req.csrfToken());
     next();
 });
-// io.use(function(socket, next) {
-//     cookieSessionMiddleware(socket.request, socket.request.res, next);
-// });
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -145,7 +145,15 @@ app.get("/user", (req, res) => {
         }
     });
 });
-//
+
+app.post("/invitation", (req, res) => {
+    const code = Math.floor(Math.random() * Math.floor(99999));
+    db.saveInvitation(req.session.userId, code);
+    res.json({
+        code: code
+    });
+});
+
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const image = config.s3Url + req.file.filename;
     db.uploadImage(image, req.session.userId)
@@ -162,14 +170,6 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         .catch(err => {
             console.log("error in server upload", err);
         });
-});
-
-app.post("/invitation", (req, res) => {
-    const code = Math.floor(Math.random() * Math.floor(99999));
-    db.saveInvitation(req.session.userId, code);
-    res.json({
-        code: code
-    });
 });
 
 app.post("/bio", (req, res) => {
@@ -189,6 +189,22 @@ app.post("/bio", (req, res) => {
         .catch(err => {
             console.log("error in server upload", err);
         });
+});
+
+app.post("/mirror", (req, res) => {
+    // console.log("req.session drawing", req.session);
+    db.getAccountforUser(req.session.userId).then(code => {
+        return db
+            .addDrawing(req.body.drawing, code.rows[0].account)
+            .then(result => {
+                // console.log("data for drawing", result);
+                req.session.drawing_id = result.rows[0].id;
+                // req.session.account = data.rows[0].account;
+            })
+            .catch(err => {
+                console.log("error in server upload", err);
+            });
+    });
 });
 
 // app.get("/mirror", (req, res) => {
@@ -224,35 +240,35 @@ app.get("*", (req, res) => {
 
 server.listen(process.env.PORT || 8080, () => console.log("I'm listening"));
 
-// let onlineUsers = [];
-//
-// io.on("connection", socket => {
-//     console.log(`socket with the id ${socket.id} is now connected`);
-//     let userId = socket.request.session.userId;
-//
-//     console.log("onlineUsers: ", onlineUsers);
-//     onlineUsers.push({ userId: userId, socketid: socket.id });
-//
-//     let arrayOfIds = onlineUsers.map(user => {
-//         return Number(user.userId);
-//     });
-//     console.log("array of ids", arrayOfIds);
-//     db.getUsersByIds(arrayOfIds)
-//         .then(results => {
-//             // console.log("reuslts for array", results);
-//             socket.emit("onlineUsers", results.rows);
-//         })
-//         .catch(err => {
-//             console.log("error in server upload", err);
-//         });
-//
-//     socket.on("disconnect", () => {
-//         console.log(`socket with the id ${socket.id} is now disconnected`);
-//         onlineUsers[socket.id] = null;
-//     });
-// });
-//
-// console.log("log for sockets: ", io.sockets.sockets);
+let onlineUsers = [];
+
+io.on("connection", socket => {
+    console.log(`socket with the id ${socket.id} is now connected`);
+    let userId = socket.request.session.userId;
+
+    console.log("onlineUsers: ", onlineUsers);
+    onlineUsers.push({ userId: userId, socketid: socket.id });
+
+    let arrayOfIds = onlineUsers.map(user => {
+        return Number(user.userId);
+    });
+    // console.log("array of ids", arrayOfIds);
+    // db.getUsersByIds(arrayOfIds)
+    //     .then(results => {
+    //         // console.log("reuslts for array", results);
+    //         socket.emit("onlineUsers", results.rows);
+    //     })
+    //     .catch(err => {
+    //         console.log("error in server upload", err);
+    //     });
+
+    socket.on("disconnect", () => {
+        console.log(`socket with the id ${socket.id} is now disconnected`);
+        onlineUsers[socket.id] = null;
+    });
+});
+
+console.log("log for sockets: ", io.sockets.sockets);
 
 // listen for new chat messages coming in:
 // socket.on("chatMessages", data => {
@@ -275,4 +291,3 @@ server.listen(process.env.PORT || 8080, () => console.log("I'm listening"));
 // socket.broadcast("chatMsgForRedux", myNewChat => {
 //     store.dispatch(chatMsgForRedux(data));
 // });
-//

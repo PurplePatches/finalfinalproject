@@ -125,9 +125,7 @@ export default class App extends React.Component {
                                 );
                             }}
                         />
-                        {
-                            // <Route path="/user/chat" component={Chat} />
-                        }
+                        <Route path="/user/chat" component={Chat} />
                     </div>
                     <div className="uploader1">
                         {this.state.isUploaderVisible && (

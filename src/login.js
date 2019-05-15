@@ -10,7 +10,7 @@ export default class Login extends React.Component {
         this.login = this.login.bind(this);
     }
     saveInput(e) {
-        console.log("what's goin on here?: ", e.target.value);
+        // console.log("what's goin on here?: ", e.target.value);
         this.setState({
             [e.target.name]: e.target.value
         });
@@ -35,7 +35,7 @@ export default class Login extends React.Component {
     }
 
     render() {
-        console.log("show me this.state: ", this.state);
+        // console.log("show me this.state: ", this.state);
         return (
             <div id="form">
                 {this.state.err && (

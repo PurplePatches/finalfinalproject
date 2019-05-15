@@ -41,7 +41,7 @@ export default class Registration extends React.Component {
                 <p className="reg_body">
                     Being apart is hard enough. With TogetherApart, you and your
                     love can stay in touch with real-time chats, or why not
-                    leave them a bathroom mirror note for when they wake up?{" "}
+                    leave them a bathroom mirror note for when they wake up?
                 </p>
                 <h2>Register to enter our site</h2>
                 <div className="reg_inputs">
