@@ -1,7 +1,23 @@
 import axios from "./axios";
-import * as io from "socket.io-client";
+// import * as io from "socket.io-client";
 
-const socket = io.connect();
+// const socket = io.connect();
+
+export async function newMessage(data) {
+    console.log("made it to newMessage in actions");
+    return {
+        type: "NEW_MESSAGE",
+        newChat: data
+    };
+}
+
+export async function getAllChatMessages(allMessages) {
+    console.log("made it getAllChatMessages in actions");
+    return {
+        type: "ALL_MESSAGES",
+        allMessages: allMessages
+    };
+}
 //
 // export async function receiveUsers() {
 //     // console.log("made it to action/receiveUsers");

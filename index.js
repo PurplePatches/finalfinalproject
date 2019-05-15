@@ -207,16 +207,6 @@ app.post("/mirror", (req, res) => {
     });
 });
 
-// app.get("/mirror", (req, res) => {
-//     db.showBothUsers(req.session.account, req.session.userId)
-//         .then(results => {
-//             console.log("results of showboth users: ", results);
-//         })
-//         .catch(err => {
-//             console.log("error in server upload", err);
-//         });
-// });
-
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/welcome");
@@ -243,15 +233,45 @@ server.listen(process.env.PORT || 8080, () => console.log("I'm listening"));
 let onlineUsers = [];
 
 io.on("connection", socket => {
-    console.log(`socket with the id ${socket.id} is now connected`);
+    // console.log(`socket with the id ${socket.id} is now connected`);
     let userId = socket.request.session.userId;
+
+    db.getChatMessages().then(rows => {
+        console.log("rows for getChatMessages: ", rows);
+        io.sockets.emit("getChatMessages", rows.rows);
+    });
+
+    socket.on("chatMessages", newMessage => {
+        // console.log("newMessage: ", newMessage);
+        db.getUserInfo(socket.request.session.userId).then(user => {
+            // console.log("user: ", user.rows[0]);
+            let newMessageObj = {
+                first: user.rows[0].first_name,
+                last: user.rows[0].last_name,
+                image: user.rows[0].image,
+                chat: newMessage,
+                id: socket.request.session.userId
+            };
+            io.sockets.emit("chatMessages", newMessage);
+            // console.log("newMessageObj: ", newMessageObj);
+
+            db.saveMessage(socket.request.session.userId, newMessage).then(
+                rows => {
+                    console.log("rows for saveMessage: ", rows);
+                }
+            );
+        });
+        // console.log("newMessages: ", newMessage);
+    });
+
+    socket.on("getChatMessages", chats => {});
 
     console.log("onlineUsers: ", onlineUsers);
     onlineUsers.push({ userId: userId, socketid: socket.id });
 
-    let arrayOfIds = onlineUsers.map(user => {
-        return Number(user.userId);
-    });
+    // let arrayOfIds = onlineUsers.map(user => {
+    //     return Number(user.userId);
+    // });
     // console.log("array of ids", arrayOfIds);
     // db.getUsersByIds(arrayOfIds)
     //     .then(results => {
@@ -262,32 +282,13 @@ io.on("connection", socket => {
     //         console.log("error in server upload", err);
     //     });
 
-    socket.on("disconnect", () => {
+    socket.on("disconnect", socket => {
         console.log(`socket with the id ${socket.id} is now disconnected`);
         onlineUsers[socket.id] = null;
     });
 });
 
 console.log("log for sockets: ", io.sockets.sockets);
-
-// listen for new chat messages coming in:
-// socket.on("chatMessages", data => {
-//     //if using db method, insert chat and userId;
-//     //if using array method, push chat into chats array
-//     //either way: have to do a db query to get user info:
-//     //first, last, image, timestamp(if wanted): use query from part3
-//     //(getUserInfo)
-//     //next step: get user's first, last, image + chat into redux
-//     //object that looks the same as object used for chats array:
-//     // let myNewChat = {
-//     //     first: results.rows[0].first,
-//     //     last: results.rows[0].lastName,
-//     //     chat: data,
-//     //     id: socket.request.session.userId,
-//     //     timestamp: results.rows[0].timestamp
-//     // }
-//     //need to send the above info back to the front:
-// });
 // socket.broadcast("chatMsgForRedux", myNewChat => {
 //     store.dispatch(chatMsgForRedux(data));
 // });

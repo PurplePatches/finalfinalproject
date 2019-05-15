@@ -4,9 +4,12 @@ import axios from "./axios";
 export default class Uploader extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            isUploaderVisible: true
+        };
         this.saveInput = this.saveInput.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
+        this.close = this.close.bind(this);
     }
     saveInput(e) {
         console.log(e.target.value);
@@ -24,22 +27,36 @@ export default class Uploader extends React.Component {
         });
     }
 
+    close() {
+        this.setState({ isUploaderVisible: false });
+    }
+
     render() {
         return (
-            <div className="imageModal">
-                <input
-                    type="file"
-                    accept="image/*"
-                    name="file"
-                    title=" "
-                    onChange={this.saveInput}
-                />
-                <button
-                    className="uploadImage"
-                    onClick={e => this.uploadImage(e)}
-                >
-                    Save
-                </button>
+            <div className="modal">
+                <div className="overlay">
+                    <div className="modal_content">
+                        <input
+                            id="upload"
+                            type="file"
+                            accept="image/*"
+                            name="file"
+                            title=" "
+                            onChange={this.saveInput}
+                        />
+                        <div className="buttonsWrapper">
+                            <button
+                                className="uploadImage"
+                                onClick={e => this.uploadImage(e)}
+                            >
+                                Save
+                            </button>
+                            <button className="closeModal" onClick={this.close}>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

@@ -7,7 +7,7 @@ import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Home from "./home";
 import Clock from "./clock";
-// import Mirror from "./mirror";
+import Mirror from "./mirror";
 import Chat from "./chat";
 import { Link } from "react-router-dom";
 
@@ -64,6 +64,17 @@ export default class App extends React.Component {
                 <div>
                     <Logo />
                     <Clock />
+                    <div className="navbar">
+                        {" "}
+                        <Link to="/home"> Home |</Link>
+                        <Link to="/chat"> Chat |</Link>
+                        <Link to="/mirror"> Mirror | </Link>
+                        <a href="/logout">
+                            <button className="logoutButton" type="button">
+                                Logout
+                            </button>
+                        </a>
+                    </div>
                     <ProfilePic
                         firstName={first_name}
                         lastName={last_name}
@@ -72,13 +83,6 @@ export default class App extends React.Component {
                             this.setState({ isUploaderVisible: true });
                         }}
                     />
-
-                    <a href="/logout">
-                        <button className="logoutButton" type="button">
-                            Logout
-                        </button>
-                    </a>
-                    <Link to="/home">Home</Link>
                     <div>
                         {this.state.code && (
                             <div className="code">
@@ -113,20 +117,21 @@ export default class App extends React.Component {
                                 );
                             }}
                         />
-                        <Route
-                            exact
-                            path="/home"
-                            render={() => {
-                                console.log("Home in App");
-                                return (
-                                    <div className="home">
-                                        <Home />
-                                    </div>
-                                );
-                            }}
-                        />
-                        <Route path="/user/chat" component={Chat} />
                     </div>
+                    <Route
+                        exact
+                        path="/home"
+                        render={() => {
+                            console.log("Home in App");
+                            return (
+                                <div className="home">
+                                    <Home />
+                                </div>
+                            );
+                        }}
+                    />
+                    <Route path="/chat" component={Chat} />
+                    <Route path="/mirror" component={Mirror} />
                     <div className="uploader1">
                         {this.state.isUploaderVisible && (
                             <Uploader

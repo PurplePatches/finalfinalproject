@@ -16,12 +16,18 @@ body {
     border: 2px orange solid;
 }
 
+.chatArea {
+    width: 500px;
+    height: 300px;
+}
+
 .home {
     border: 2px blue solid;
 }
 
 .navBar {
     border: 2px yellow solid;
+    margin-top: 0;
 }
 
 .logo_bg {
@@ -120,8 +126,14 @@ input {
     margin-bottom: 10px;
 }
 
-a {
+a,
+.logoutButton {
     color: rgb(0, 174, 239);
+    border: transparent;
+    text-decoration: underline;
+    font-size: 16px;
+    background-color: transparent;
+    font-family: "Roboto";
 }
 .profilePic {
     width: 150px;
@@ -155,13 +167,97 @@ a {
     text-align: left;
 }
 
-.imageModal {
+.modal {
     position: fixed;
-    width: 300px;
-    height: 300px;
-    background-color: rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    clear: both;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 990;
+}
+
+.modal,
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 995;
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.modal .modal_content {
+    z-index: 999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 90%;
+    overflow: auto;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 20px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    width: 520px; /* This just a default width */
+}
+
+#upload {
+    background-color: rgb(241, 78, 149);
+    box-shadow: rgba(0, 0, 0, 0.09);
+    width: 400px;
+    height: 47px;
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-align: left;
+    text-indent: 5px;
+    margin-bottom: 10px;
+}
+
+.closeModal,
+.uploadImage {
+    background-color: rgb(241, 78, 149);
+    box-shadow: rgba(0, 0, 0, 0.09);
+    width: 400px;
+    height: 47px;
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-align: left;
+    text-indent: 5px;
+    margin-bottom: 10px;
+}
+
+.modal .modal_content > h2 {
+    font-size: 28px;
+    font-weight: 200;
+    margin: 20px 0 40px;
+    text-align: center;
+}
+
+.modal .modal_content .buttons_wrapper {
+    padding: 20px;
+}
+
+.modal .uploadimage .closeModal {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.5;
+    background: none;
+    border: none;
+    transition: opacity 0.2s ease;
+    padding: 2px;
+}
+
+.modal .uploadImage:hover {
+    opacity: 0.9;
 }
 
 .bioAdd,
@@ -172,9 +268,10 @@ a {
     border: 2px red solid;
 }
 
-.mirrorContainer {
-    border: 2px green solid;
-    margin-left: 100px;
+#entireMirror {
+    border: 2px black solid;
+    width: 458px;
+    height: 458px;
 }
 
 #box {
@@ -186,6 +283,8 @@ a {
 
 #canvas {
     background: transparent;
+    border: 2px green solid;
+    margin-left: 100px;
 }
 
 #friends img {

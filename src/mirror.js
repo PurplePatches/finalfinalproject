@@ -96,7 +96,7 @@ export default class Canvas extends React.Component {
     render() {
         console.log("this.canvasRef: ", this.canvasRef);
         return (
-            <div>
+            <div id="entireMirror">
                 <div id="box">
                     <canvas
                         id="canvas"

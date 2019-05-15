@@ -87,6 +87,20 @@ exports.addDrawing = function(drawing, accountID) {
     return db.query(q, params);
 };
 
+exports.saveMessage = function(sender_id, chat) {
+    let q = `INSERT INTO chats (sender_id, chat)
+    VALUES ($1, $2)
+    RETURNING sender_id, chat`;
+    let params = [sender_id, chat];
+    return db.query(q, params);
+};
+
+exports.getChatMessages = function() {
+    let q = `SELECT users.id, chats.id, first_name, image, chat, sent FROM chats
+    JOIN users ON sender_id = users.id`;
+    return db.query(q);
+};
+
 // exports.showBothUsers = function(account, id) {
 //     let q = `SELECT * FROM users
 //     WHERE account = $1 AND id IS NOT $2;`;
