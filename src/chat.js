@@ -45,10 +45,10 @@ class Chat extends React.Component {
                     Send
                 </button>
                 {chatMessages != undefined &&
-                    chatMessages.reverse().map(message => {
+                    chatMessages.map((message, id) => {
                         // console.log("message: ", message);
                         return (
-                            <div className="singleMessage" key={message.id}>
+                            <div className="singleMessage" key={id}>
                                 <img
                                     className="chatImage"
                                     src={message.image}

@@ -283,21 +283,19 @@ a,
 
 #entireMirror {
     border: 2px black solid;
-    width: 458px;
-    height: 458px;
+    /* width: 458px;
+    height: 458px; */
 }
 
 #box {
     display: inline-block;
     background: url("https://cloud.githubusercontent.com/assets/4652816/12771954/41dccb10-ca68-11e5-9db8-a473f51426c8.jpg");
     background-size: cover;
-    margin-left: 100px;
 }
 
 #canvas {
     background: transparent;
     border: 2px green solid;
-    margin-left: 100px;
 }
 
 #friends img {

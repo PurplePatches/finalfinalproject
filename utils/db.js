@@ -96,8 +96,13 @@ exports.saveMessage = function(sender_id, chat) {
 };
 
 exports.getChatMessages = function() {
-    let q = `SELECT users.id, chats.id, first_name, image, chat, sent FROM chats
-    JOIN users ON sender_id = users.id`;
+    let q = `SELECT users.id, chats.id, first_name, image, chat, sent
+    FROM chats
+    JOIN users
+    ON sender_id = users.id
+    ORDER BY chats.id DESC
+    LIMIT 10
+    `;
     return db.query(q);
 };
 

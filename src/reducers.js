@@ -2,7 +2,7 @@ export default function(state = {}, action) {
     if (action.type == "NEW_MESSAGE") {
         state = {
             ...state,
-            allMessages: [...state.allMessages, action.newChat]
+            allMessages: [action.newChat, ...state.allMessages]
         };
     }
 

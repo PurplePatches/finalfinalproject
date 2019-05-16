@@ -192,7 +192,7 @@ app.post("/bio", (req, res) => {
 });
 
 app.post("/mirror", (req, res) => {
-    // console.log("req.session drawing", req.session);
+    // console.log("req.session drawing", req.body);
     db.getAccountforUser(req.session.userId).then(code => {
         return db
             .addDrawing(req.body.drawing, code.rows[0].account)
@@ -231,8 +231,22 @@ app.get("*", (req, res) => {
 server.listen(process.env.PORT || 8080, () => console.log("I'm listening"));
 
 let onlineUsers = [];
+var line_history = [];
 
 io.on("connection", socket => {
+    console.log(line_history);
+    for (var i in line_history) {
+        console.log("line_history: ", line_history[i]);
+        io.sockets.emit("draw_line", { line: line_history[i] });
+    }
+
+    // add handler for message type "draw_line".
+    socket.on("draw_line", function(data) {
+        // add received line to history
+        line_history.push(data.line);
+        // send line to all clients
+        io.sockets.emit("draw_line", { line: data.line });
+    });
     // console.log(`socket with the id ${socket.id} is now connected`);
     let userId = socket.request.session.userId;
     let counter = 1;
@@ -260,7 +274,7 @@ io.on("connection", socket => {
 
             db.saveMessage(socket.request.session.userId, newMessage)
                 .then(rows => {
-                    console.log("rows for saveMessage: ", rows);
+                    // console.log("rows for saveMessage: ", rows);
                 })
                 .catch(err => {
                     console.log("error in server upload", err);
@@ -269,11 +283,11 @@ io.on("connection", socket => {
         // console.log("newMessages: ", newMessage);
     });
 
-    socket.on("getChatMessages", chats => {
-        console.log("chats: ", chats);
-    });
+    // socket.on("getChatMessages", chats => {
+    //     // console.log("chats: ", chats);
+    // });
 
-    console.log("onlineUsers: ", onlineUsers);
+    // console.log("onlineUsers: ", onlineUsers);
     onlineUsers.push({ userId: userId, socketid: socket.id });
 
     // let arrayOfIds = onlineUsers.map(user => {
@@ -290,12 +304,12 @@ io.on("connection", socket => {
     //     });
 
     socket.on("disconnect", socket => {
-        console.log(`socket with the id ${socket.id} is now disconnected`);
+        // console.log(`socket with the id ${socket.id} is now disconnected`);
         onlineUsers[socket.id] = null;
     });
 });
 
-console.log("log for sockets: ", io.sockets.sockets);
+// console.log("log for sockets: ", io.sockets.sockets);
 // socket.broadcast("chatMsgForRedux", myNewChat => {
 //     store.dispatch(chatMsgForRedux(data));
 // });

@@ -4,7 +4,7 @@ import axios from "./axios";
 // const socket = io.connect();
 
 export async function newMessage(data) {
-    console.log("made it to newMessage in actions");
+    // console.log("made it to newMessage in actions");
     return {
         type: "NEW_MESSAGE",
         newChat: data
@@ -12,7 +12,7 @@ export async function newMessage(data) {
 }
 
 export async function getAllChatMessages(allMessages) {
-    console.log("made it getAllChatMessages in actions");
+    // console.log("made it getAllChatMessages in actions");
     return {
         type: "ALL_MESSAGES",
         allMessages: allMessages

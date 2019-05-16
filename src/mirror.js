@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "./axios";
+import { initSocket } from "./socket";
+import { connect } from "react-redux";
 
 export default class Canvas extends React.Component {
     constructor(props) {
@@ -11,14 +13,15 @@ export default class Canvas extends React.Component {
     }
     //axios.get from db to see if there's an image, if yes, show it with clear button, if no show blanks canvas
     componentDidMount() {
-        axios
-            .get("/mirror", {
-                drawing: this.dataURL
-            })
-            .then(({ dataUrl }) => {
-                console.log("data for drawing: ", dataURL);
-                this.props.dataURL;
-            });
+        let socket = initSocket();
+        // axios
+        //     .get("/mirror", {
+        //         drawing: this.dataURL
+        //     })
+        //     .then(({ dataUrl }) => {
+        //         console.log("data for drawing: ", dataURL);
+        //         this.props.dataURL;
+        //     });
 
         const url = "./pencil-edge-mirror1280.jpg";
         const canvas = this.canvasRef.current;
@@ -38,48 +41,99 @@ export default class Canvas extends React.Component {
         var lastY;
         var isDrawing;
         var old = null;
+        var mouse = {
+            click: false,
+            move: false,
+            pos: { x: 0, y: 0 },
+            pos_prev: false
+        };
 
         function draw(x, y) {
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(x, y);
-            // ctx.strokeStyle = "#d9b310";
-            ctx.lineWidth = "5";
-            ctx.stroke();
-            // ctx.closePath();
-            lastX = x;
-            lastY = y;
+            // ctx.beginPath();
+            // ctx.moveTo(lastX, lastY);
+            // ctx.lineTo(x, y);
+            // // ctx.strokeStyle = "#d9b310";
+            // ctx.stroke();
+            // // ctx.closePath();
+            // lastX = x;
+            // lastY = y;
         }
+        socket.on("draw_line", function(data) {
+            var line = data.line;
+            console.log("DRAW!!!!!!!!!!!!", line);
+            ctx.globalCompositeOperation = "destination-out";
+            if (line[1].x === 0) {
+                return;
+            }
+            ctx.beginPath();
+            ctx.lineWidth = "5";
+            ctx.moveTo(line[0].x, line[0].y);
+            console.log("lines x and y0", line[0].x, line[0].y);
+            ctx.lineTo(line[1].x, line[1].y);
+            ctx.stroke();
+            ctx.closePath();
+        });
 
         $("canvas").on("mousedown", function(e) {
             // console.log("click");
             isDrawing = true;
-            old = { lastX: e.offsetX, lastY: e.clientY - elementOffset };
+            mouse.pos_prev.x = e.offsetX;
+            mouse.pos_prev.y = e.clientY - elementOffset;
+            mouse.pos.x = e.offsetX;
+            mouse.pos.y = e.clientY - elementOffset;
+            // old = { lastX: e.offsetX, lastY: e.clientY - elementOffset };
+            mouse.click = true;
         });
 
         $("canvas").on("mousemove", function(e) {
             // console.log("mousemove");
             if (isDrawing) {
-                var x = e.offsetX;
-                var y = e.clientY - elementOffset;
+                // var x = e.offsetX;
+                // var y = e.clientY - elementOffset;
+                mouse.pos.x = e.offsetX;
+                mouse.pos.y = e.clientY - elementOffset;
                 ctx.globalCompositeOperation = "destination-out";
-                old = { x: x, y: y };
-                draw(x, y);
+                // old = { x: x, y: y };
+                mouse.move = true;
+                // draw(x, y);
             }
         });
 
         $("canvas").on("mouseup", () => {
             // console.log("mouseup");
             isDrawing = false;
+            var dataURL = document.getElementById("canvas").toDataURL();
+            $("#sig").val(dataURL);
             this.dataURL = document.getElementById("canvas").toDataURL();
             // console.log("dataURL", this.dataURL);
+            //code below is undefined
             this.setState({ drawing: this.dataURL });
+            // console.log("this.dataURL: ", this.dataURL);
+            // //code below shows
             $("#sig").val(this.dataURL);
+            // console.log("this.dataURL val: ", dataURL);
+            mouse.click = false;
         });
+
+        function mainLoop() {
+            // check if the user is drawing
+            if (mouse.click && mouse.move && mouse.pos_prev) {
+                console.log("mde ir here");
+                // send line to to the serve
+                console.log("mouse pos", { line: [mouse.pos, mouse.pos_prev] });
+                socket.emit("draw_line", { line: [mouse.pos, mouse.pos_prev] });
+                mouse.move = false;
+            }
+            // console.log("abput tp set mousr prev: ", mouse.pos.x, mouse.pos.y);
+            mouse.pos_prev = { x: mouse.pos.x, y: mouse.pos.y };
+            setTimeout(mainLoop, 25);
+        }
+        mainLoop();
     }
 
     saveDrawing(e) {
         e.preventDefault();
+        console.log("show me dataURL: ", this.dataURL);
         // console.log("state drawing", this.state.drawing);
         axios
             .post("/mirror", {
@@ -123,6 +177,7 @@ export default class Canvas extends React.Component {
     }
 }
 
+//source: http://code-and.coffee/post/2015/collaborative-drawing-canvas-node-websocket/ (socket + canvas)
 //source: https://codepen.io/james721/pen/LqlpE (reset)
 //source: https://codepen.io/progrape/pen/XXBwWe?editors=1010
 //source: https://blog.cloudboost.io/using-html5-canvas-with-react-ff7d93f5dc76
