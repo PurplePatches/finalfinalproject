@@ -1,12 +1,10 @@
 import React from "react";
 import { initSocket } from "./socket";
 import { connect } from "react-redux";
-// import * as io from "socket.io-client";
 
 class Chat extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
         this.handleInput = this.handleInput.bind(this);
     }
 
@@ -26,10 +24,13 @@ class Chat extends React.Component {
         let socket = initSocket();
         if (e.which == 13) {
             var newChat = e.target.value;
-            console.log("handleInput", e.target.value);
+            // console.log("handleInput", e.target.value);
             socket.emit("chatMessages", newChat);
             e.target.value = "";
-            e.preventDefault();
+            // e.preventDefault();
+            this.setState({
+                message: e.target.value
+            });
         }
     }
 
@@ -39,25 +40,25 @@ class Chat extends React.Component {
         return (
             <div className="myChatDiv">
                 <h1>CHAT!!!</h1>
+                <textarea className="chatArea" onKeyDown={this.handleInput} />
+                <button className="sendMessage" onClick={this.handleInput}>
+                    Send
+                </button>
                 {chatMessages != undefined &&
-                    chatMessages.map(message => {
-                        console.log("message: ", message);
+                    chatMessages.reverse().map(message => {
+                        // console.log("message: ", message);
                         return (
                             <div className="singleMessage" key={message.id}>
                                 <img
                                     className="chatImage"
                                     src={message.image}
                                 />
-                                {message.first_name} says...
-                                {message.chat}
-                                message sent: {message.sent}
+                                <div>{message.first_name} says...</div>
+                                <div>{message.chat}</div>
+                                <div>message sent: {message.sent}</div>
                             </div>
                         );
                     })}
-                <textarea className="chatArea" onKeyDown={this.handleInput} />
-                <button className="sendMessage" onClick={this.handleInput}>
-                    Send
-                </button>
             </div>
         );
     }

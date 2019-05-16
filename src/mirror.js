@@ -9,7 +9,7 @@ export default class Canvas extends React.Component {
         this.saveDrawing = this.saveDrawing.bind(this);
         this.dataURL = "";
     }
-    //axios.get from db to see if there's an image, if yet, show it with clear button, if no show blanks canvas
+    //axios.get from db to see if there's an image, if yes, show it with clear button, if no show blanks canvas
     componentDidMount() {
         axios
             .get("/mirror", {
@@ -112,11 +112,46 @@ export default class Canvas extends React.Component {
                 >
                     Save
                 </button>
+                <button
+                    className="resetDrawing"
+                    onClick={e => this.resetDrawing(e)}
+                >
+                    Reset
+                </button>
             </div>
         );
     }
 }
 
+//source: https://codepen.io/james721/pen/LqlpE (reset)
 //source: https://codepen.io/progrape/pen/XXBwWe?editors=1010
 //source: https://blog.cloudboost.io/using-html5-canvas-with-react-ff7d93f5dc76
 //https://dzone.com/articles/techniques-for-animating-on-the-canvas-in-react
+
+/*
+ * https://github.com/boblemarin/jQuery.eraser
+ * http://minimal.be/lab/jQuery.eraser/
+ *
+ * Copyright (c) 2010 boblemarin emeric@minimal.be http://www.minimal.be
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ */

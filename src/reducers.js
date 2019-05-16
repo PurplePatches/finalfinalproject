@@ -1,8 +1,8 @@
 export default function(state = {}, action) {
-    if (action.type == "NEW_MESSAGES") {
+    if (action.type == "NEW_MESSAGE") {
         state = {
             ...state,
-            chatMessages: action.messages
+            allMessages: [...state.allMessages, action.newChat]
         };
     }
 

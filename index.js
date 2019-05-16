@@ -235,9 +235,10 @@ let onlineUsers = [];
 io.on("connection", socket => {
     // console.log(`socket with the id ${socket.id} is now connected`);
     let userId = socket.request.session.userId;
-
+    let counter = 1;
     db.getChatMessages().then(rows => {
-        console.log("rows for getChatMessages: ", rows);
+        // console.log("rows for getChatMessages: ", rows);
+        counter = rows.rows[rows.rows.length - 1].id;
         io.sockets.emit("getChatMessages", rows.rows);
     });
 
@@ -245,26 +246,32 @@ io.on("connection", socket => {
         // console.log("newMessage: ", newMessage);
         db.getUserInfo(socket.request.session.userId).then(user => {
             // console.log("user: ", user.rows[0]);
+            counter++;
             let newMessageObj = {
-                first: user.rows[0].first_name,
-                last: user.rows[0].last_name,
+                first_name: user.rows[0].first_name,
+                last_name: user.rows[0].last_name,
                 image: user.rows[0].image,
                 chat: newMessage,
-                id: socket.request.session.userId
+                id: counter,
+                sent: new Date()
             };
-            io.sockets.emit("chatMessages", newMessage);
+            io.sockets.emit("chatMessages", newMessageObj);
             // console.log("newMessageObj: ", newMessageObj);
 
-            db.saveMessage(socket.request.session.userId, newMessage).then(
-                rows => {
+            db.saveMessage(socket.request.session.userId, newMessage)
+                .then(rows => {
                     console.log("rows for saveMessage: ", rows);
-                }
-            );
+                })
+                .catch(err => {
+                    console.log("error in server upload", err);
+                });
         });
         // console.log("newMessages: ", newMessage);
     });
 
-    socket.on("getChatMessages", chats => {});
+    socket.on("getChatMessages", chats => {
+        console.log("chats: ", chats);
+    });
 
     console.log("onlineUsers: ", onlineUsers);
     onlineUsers.push({ userId: userId, socketid: socket.id });

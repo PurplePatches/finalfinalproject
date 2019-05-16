@@ -10,17 +10,17 @@ export function initSocket(store) {
         console.log("made it to socket");
 
         socket.on("onlineUsers", data => {
-            console.log("gimme something!", data);
+            // console.log("gimme something!", data);
             store.dispatch(onlineUsers(data));
         });
 
         socket.on("chatMessages", message => {
-            console.log("chatmessages", message);
+            // console.log("!!!!!!!!!!!!!!!!!!!!!!1chatmessages", message);
             store.dispatch(newMessage(message));
         });
 
         socket.on("getChatMessages", allMessages => {
-            console.log("getChatMessages", allMessages);
+            // console.log("getChatMessages", allMessages);
             store.dispatch(getAllChatMessages(allMessages));
         });
 
