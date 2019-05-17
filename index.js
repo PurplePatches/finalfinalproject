@@ -145,6 +145,22 @@ app.get("/user", (req, res) => {
         }
     });
 });
+app.get("/api/user/:id", (req, res) => {
+    db.getUserInfo(req.params.id)
+        .then(({ rows }) => {
+            // console.log("now we're here at GET/user:id", rows);
+            if (req.params.id == req.session.userId) {
+                res.json({
+                    redirect: true
+                });
+            } else {
+                res.json(rows);
+            }
+        })
+        .catch(err => {
+            console.log("error in server upload", err);
+        });
+});
 
 app.post("/invitation", (req, res) => {
     const code = Math.floor(Math.random() * Math.floor(99999));
@@ -191,8 +207,12 @@ app.post("/bio", (req, res) => {
         });
 });
 
+app.get("/gallery", (req, res) => {
+    console.log("i'm here at gallery");
+});
+
 app.post("/mirror", (req, res) => {
-    // console.log("req.session drawing", req.body);
+    console.log("req.session drawing", req.body);
     db.getAccountforUser(req.session.userId).then(code => {
         return db
             .addDrawing(req.body.drawing, code.rows[0].account)
@@ -236,7 +256,7 @@ var line_history = [];
 io.on("connection", socket => {
     console.log(line_history);
     for (var i in line_history) {
-        console.log("line_history: ", line_history[i]);
+        // console.log("line_history: ", line_history[i]);
         io.sockets.emit("draw_line", { line: line_history[i] });
     }
 

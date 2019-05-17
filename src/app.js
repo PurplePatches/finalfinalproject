@@ -10,6 +10,8 @@ import Clock from "./clock";
 import Mirror from "./mirror";
 import Chat from "./chat";
 import { Link } from "react-router-dom";
+import OtherProfile from "./otherprofile";
+import Gallery from "./gallery";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -62,48 +64,81 @@ export default class App extends React.Component {
         return (
             <BrowserRouter>
                 <div>
-                    <Logo />
-                    <Clock />
-                    <div className="navbar">
-                        <Link to="/">Profile |</Link>
-                        <Link to="/home"> Home |</Link>
-                        <Link to="/chat"> Chat |</Link>
-                        <Link to="/mirror"> Mirror |</Link>
-                        <a> Gallery | </a>
-                        <a href="/logout">
-                            <button className="logoutButton" type="button">
-                                Logout
-                            </button>
-                        </a>
+                    <div className="header">
+                        <div className="ownProfile">
+                            <ProfilePic
+                                className="profilePicHome"
+                                firstName={first_name}
+                                lastName={last_name}
+                                image={image}
+                                clickHandler={() => {
+                                    this.setState({ isUploaderVisible: true });
+                                }}
+                                bio={bio}
+                            />
+                            <p className="changeImage">Click image to change</p>
+                        </div>
+                        <Logo />
+                        <div>
+                            <Route
+                                path="/user/:id"
+                                render={props => {
+                                    return (
+                                        <OtherProfile
+                                            key={props.match.url}
+                                            match={props.match}
+                                            history={props.history}
+                                            firstName={first_name}
+                                            lastName={last_name}
+                                            image={image}
+                                            bio={bio}
+                                            user={this.user}
+                                        />
+                                    );
+                                }}
+                            />
+                        </div>
                     </div>
-                    <ProfilePic
-                        firstName={first_name}
-                        lastName={last_name}
-                        image={image}
-                        clickHandler={() => {
-                            this.setState({ isUploaderVisible: true });
-                        }}
-                    />
+                    <Clock />
+                    <div id="navContainer">
+                        <div className="navbar">
+                            <Link to="/">Profile |</Link>
+                            <Link to="user/9"> See partner |</Link>
+                            {
+                                // <Link to="/gallery"> Gallery |</Link>
+                            }
+                            <Link to="/mirror"> Mirror |</Link>
+                            <Link to="/chat"> Chat |</Link>
+                            <a href="/logout">
+                                <button className="logoutButton" type="button">
+                                    Logout
+                                </button>
+                            </a>
+                        </div>
+                    </div>
                     <div>
-                        {this.state.code && (
-                            <div className="code">
-                                This your Couple Code: {this.state.code}
-                            </div>
-                        )}
-                        {!this.state.code && (
-                            <button
-                                className="invitationButton"
-                                onClick={e => this.generateInvitation(e)}
-                            >
-                                Generate Couple Code
-                            </button>
-                        )}
+                        <div id="invitation_code">
+                            {this.state.code && (
+                                <div className="code">
+                                    Your Couple Code is: {this.state.code}
+                                </div>
+                            )}
+                            {!this.state.code && (
+                                <button
+                                    className="invitationButton"
+                                    onClick={e => this.generateInvitation(e)}
+                                >
+                                    Click here to generate Couple Code
+                                </button>
+                            )}
+                        </div>
                         <Route
                             exact
                             path="/"
                             render={() => {
                                 return (
                                     <Profile
+                                        className="imtheprofile"
                                         firstName={first_name}
                                         lastName={last_name}
                                         image={image}
@@ -118,6 +153,18 @@ export default class App extends React.Component {
                                 );
                             }}
                         />
+                        <div className="uploader1">
+                            {this.state.isUploaderVisible && (
+                                <Uploader
+                                    setUrl={image =>
+                                        this.setState({
+                                            image: image,
+                                            isUploaderVisible: false
+                                        })
+                                    }
+                                />
+                            )}
+                        </div>
                     </div>
                     <Route
                         exact
@@ -133,18 +180,9 @@ export default class App extends React.Component {
                     />
                     <Route path="/chat" component={Chat} />
                     <Route path="/mirror" component={Mirror} />
-                    <div className="uploader1">
-                        {this.state.isUploaderVisible && (
-                            <Uploader
-                                setUrl={image =>
-                                    this.setState({
-                                        image: image,
-                                        isUploaderVisible: false
-                                    })
-                                }
-                            />
-                        )}
-                    </div>
+                    {
+                        // <Route path="/gallery" component={Gallery} />
+                    }
                 </div>
             </BrowserRouter>
         );

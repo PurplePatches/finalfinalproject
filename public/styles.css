@@ -12,48 +12,269 @@ body {
     background-position: center, top left;
 }
 
+/*//////////////////START OF HEADER/////////////////////*/
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profilePic {
+    width: 138px;
+    height: 135px;
+    margin-left: 50px;
+}
+
+.changeImage {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(172, 172, 172);
+    line-height: 3.421;
+    text-align: left;
+    margin-left: 50px;
+}
+
+.otherBio {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(241, 78, 149);
+    font-weight: bold;
+    line-height: 3.421;
+    text-align: left;
+    margin-right: 50px;
+}
+
+.clockText {
+    margin-left: 50px;
+}
+/*                         LOGO                            */
+.logo_bg {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 22px 28.48px 3.52px rgba(0, 0, 0, 0.07);
+    width: 138px;
+    height: 135px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.friendImage {
+    width: 138px;
+    height: 135px;
+}
+
+/*////////////////////END OF HEADER//////////////////////*/
+
+/*////////////////////NAVBAR/////////////////////////////*/
+#navContainer {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    font-family: "Roboto";
+    font-size: 18px;
+    font-family: "Roboto";
+    color: rgb(0, 174, 239);
+    line-height: 0.722;
+}
+
+.navbar {
+    font-family: "Roboto";
+    font-size: 18px;
+    font-family: "Roboto";
+    color: rgb(0, 174, 239);
+    line-height: 0.722;
+}
+/*///////////////////////END OF NAVBAR//////////////////////*/
+
+#invitation_code {
+    width: 505px;
+}
+
+.code {
+}
+
+/*//////////////////////////CHAT/////////////////////////////*/
+
 .myChatDiv {
-    border: 2px orange solid;
     display: flex;
     flex-direction: column;
     align-content: center;
+    padding-left: 50px;
+    width: 700px;
 }
 
-.singleMessage {
-    border: 1px black solid;
+.chatDescription {
+    padding-top: 10px;
+    font-size: 18px;
+    font-family: "Roboto";
+    color: rgb(0, 174, 239);
+    line-height: 0.722;
+    text-align: center;
 }
 
 .chatArea {
-    width: 500px;
-    height: 300px;
-    overflow: scroll;
+    width: 650px;
+    height: 100px;
+    margin-bottom: 10px;
 }
 
 .chatImage {
     width: 50px;
     height: 50px;
+    border: 2px solid rgb(241, 78, 149);
 }
 
+.singleMessage {
+    background-color: rgb(255, 255, 255);
+    font-size: 16px;
+    font-family: "Roboto";
+    font-weight: bold;
+    color: rgb(134, 133, 133);
+    text-align: left;
+    border: 2px solid rgb(241, 78, 149);
+}
+
+#chat {
+    color: rgb(0, 174, 239);
+    font-weight: bold;
+}
+/*//////////                END OF CHAT            //////////////////*/
+
+/*///////////////                  HOME             ///////////*/
 .home {
     border: 2px blue solid;
 }
 
-.navBar {
-    border: 2px yellow solid;
-    margin-top: 0;
+/*///////////////                END OF HOME            /////////////*/
+
+/*////////////////////////        MIRROR               ////////////////*/
+#entireMirror {
+    margin-left: 200px;
+    width: 500px;
+    height: 500px;
 }
 
-.logo_bg {
-    background-color: rgb(255, 255, 255);
-    /* box-shadow: 0px 22px 28.48px 3.52px rgba(0, 0, 0, 0.07); */
-    width: 138px;
-    height: 135px;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* border: 2px blue solid; */
+#box {
+    display: inline-block;
+    background: url("https://cloud.githubusercontent.com/assets/4652816/12771954/41dccb10-ca68-11e5-9db8-a473f51426c8.jpg");
+    background-size: cover;
+    margin-bottom: 5px;
 }
+
+#canvas {
+    background: transparent;
+    border: 5px solid rgb(241, 78, 149);
+}
+
+.drawingButtons {
+    display: flex;
+    width: 500px;
+}
+
+.saveDrawing {
+    background-color: rgb(241, 78, 149);
+    box-shadow: rgba(0, 0, 0, 0.09);
+    width: 200px;
+    height: 47px;
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-align: left;
+    text-indent: 5px;
+    margin-bottom: 10px;
+    border: transparent;
+    margin-right: 17px;
+}
+
+.resetDrawing {
+    background-color: rgb(241, 78, 149);
+    box-shadow: rgba(0, 0, 0, 0.09);
+    width: 200px;
+    height: 47px;
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-align: left;
+    text-indent: 5px;
+    margin-bottom: 10px;
+    border: transparent;
+}
+/*////////////////////////        END OF MIRROR       ////////////////*/
+
+/*//////////////                PROFILE              ////////////////////*/
+.moodDescription {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(134, 133, 133);
+    line-height: 1.75;
+    text-align: left;
+    padding-top: 20px;
+}
+
+.bioAdd,
+.bioEditor {
+    padding-left: 50px;
+    width: 700px;
+    height: 500px;
+    overflow: hidden;
+}
+
+.bioText {
+    margin-top: 10px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.09);
+    width: 505px;
+    height: 45px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-indent: 5px;
+}
+
+.bioArea {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(0, 174, 239);
+    line-height: 3.421;
+    text-align: left;
+    width: 505px;
+    height: 60px;
+    background-color: rgb(255, 255, 255);
+}
+
+.bio {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(0, 174, 239);
+    line-height: 3.421;
+    text-align: left;
+    width: 505px;
+    height: 60px;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 5px;
+}
+
+.bioButton {
+    background-color: rgb(241, 78, 149);
+    box-shadow: rgba(0, 0, 0, 0.09);
+    width: 505px;
+    height: 47px;
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-align: left;
+    text-indent: 5px;
+    margin-bottom: 10px;
+    border: transparent;
+}
+/*//////////////                END OF PROFILE       ////////////////////*/
+/* .showOtherProfile {
+    border: 2px solid black;
+    margin-right: 50px;
+} */
+
+/*/////////////                SHOW OTHER PROFILE   /////////////////////*/
 
 #form {
     padding-left: 50px;
@@ -73,7 +294,8 @@ body {
 }
 
 .reg_body,
-.login_body {
+.login_body,
+.code {
     font-size: 16px;
     font-family: "Roboto";
     color: rgb(134, 133, 133);
@@ -95,10 +317,6 @@ h2 {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-#invitation_code {
-    width: 505px;
 }
 
 input {
@@ -125,7 +343,8 @@ input {
 }
 
 #signUp,
-#logIn {
+#logIn,
+.sendMessage {
     background-color: rgb(241, 78, 149);
     box-shadow: rgba(0, 0, 0, 0.09);
     width: 505px;
@@ -137,6 +356,23 @@ input {
     text-align: left;
     text-indent: 5px;
     margin-bottom: 10px;
+    border: transparent;
+}
+
+.invitationButton {
+    background-color: rgb(241, 78, 149);
+    box-shadow: rgba(0, 0, 0, 0.09);
+    width: 505px;
+    height: 47px;
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-align: left;
+    text-indent: 5px;
+    margin-bottom: 10px;
+    border: transparent;
+    margin-left: 50px;
 }
 
 a,
@@ -144,30 +380,11 @@ a,
     color: rgb(0, 174, 239);
     border: transparent;
     text-decoration: underline;
-    font-size: 16px;
+    font-size: 18px;
     background-color: transparent;
     font-family: "Roboto";
+    cursor: grab;
 }
-.profilePic {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    position: absolute;
-    margin-top: 50px;
-    right: 50px;
-    border: 2px red solid;
-}
-
-#profileImage img {
-    position: absolute;
-    top: 200px;
-    left: 50px;
-    border: 2px yellow solid;
-}
-
-/* .uploader1 {
-    border: 2px green solid;
-} */
 
 .error {
     width: 500px;
@@ -271,34 +488,4 @@ a,
 
 .modal .uploadImage:hover {
     opacity: 0.9;
-}
-
-.bioAdd,
-.bioEditor {
-    position: absolute;
-    top: 300px;
-    left: 300px;
-    border: 2px red solid;
-}
-
-#entireMirror {
-    border: 2px black solid;
-    /* width: 458px;
-    height: 458px; */
-}
-
-#box {
-    display: inline-block;
-    background: url("https://cloud.githubusercontent.com/assets/4652816/12771954/41dccb10-ca68-11e5-9db8-a473f51426c8.jpg");
-    background-size: cover;
-}
-
-#canvas {
-    background: transparent;
-    border: 2px green solid;
-}
-
-#friends img {
-    width: 200px;
-    height: 200px;
 }

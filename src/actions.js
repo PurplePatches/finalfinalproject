@@ -1,5 +1,4 @@
 import axios from "./axios";
-// import * as io from "socket.io-client";
 
 // const socket = io.connect();
 
@@ -47,10 +46,10 @@ export async function getAllChatMessages(allMessages) {
 //     };
 // }
 //
-// export async function onlineUsers(onlineUsers) {
-//     console.log("made it to actions/onlineUsers");
-//     return {
-//         type: "ALL_USERS",
-//         users: onlineUsers
-//     };
-// }
+export async function onlineUsers(onlineUsers) {
+    console.log("made it to actions/onlineUsers");
+    return {
+        type: "ALL_USERS",
+        users: onlineUsers
+    };
+}

@@ -7,12 +7,12 @@ class Chat extends React.Component {
         super(props);
         this.handleInput = this.handleInput.bind(this);
     }
-
-    componentDidMount() {
-        if (this.myChatDiv) {
-            this.myChatDiv.scrollTop = this.myChatDiv.scrollTop;
-        }
-    }
+    //
+    // componentDidMount() {
+    //     if (this.myChatDiv) {
+    //         this.myChatDiv.scrollTop = this.myChatDiv.scrollTop;
+    //     }
+    // }
 
     componentDidUpdate() {
         // this.myChatDiv.scrollTop = "100px";
@@ -39,11 +39,15 @@ class Chat extends React.Component {
         const { chatMessages, myChatDiv } = this.props;
         return (
             <div className="myChatDiv">
-                <h1>CHAT!!!</h1>
+                <h2 className="chatDescription">
+                    Start typing to chat, then press 'Enter' to send
+                </h2>
                 <textarea className="chatArea" onKeyDown={this.handleInput} />
-                <button className="sendMessage" onClick={this.handleInput}>
-                    Send
-                </button>
+                {
+                    // <button className="sendMessage" onClick={this.handleInput}>
+                    //     Send
+                    // </button>
+                }
                 {chatMessages != undefined &&
                     chatMessages.map((message, id) => {
                         // console.log("message: ", message);
@@ -54,7 +58,7 @@ class Chat extends React.Component {
                                     src={message.image}
                                 />
                                 <div>{message.first_name} says...</div>
-                                <div>{message.chat}</div>
+                                <div id="chat">{message.chat}</div>
                                 <div>message sent: {message.sent}</div>
                             </div>
                         );

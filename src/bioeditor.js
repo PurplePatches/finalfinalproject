@@ -36,20 +36,25 @@ export default class BioEditor extends React.Component {
         if (!this.state.mode) {
             return (
                 <div className="bioAdd">
-                    <p>What's your mood today?</p>
-                    <p>{this.props.bio}</p>
-                    <button onClick={this.switchMode}>Add</button>
+                    <p className="moodDescription">Your current mood is...</p>
+                    <div className="bio">{this.props.bio}</div>
+                    <button className="bioButton" onClick={this.switchMode}>
+                        Edit
+                    </button>
                 </div>
             );
         } else {
             return (
                 <div className="bioEditor">
+                    <p className="moodDescription">What's your mood today?</p>
                     <textarea
-                        defaultValue="What's your mood today?"
+                        className="bioArea"
                         name="bio"
                         onChange={e => this.saveInput(e)}
                     />
-                    <button onClick={this.editBio}>Save</button>
+                    <button className="bioButton" onClick={this.editBio}>
+                        Save
+                    </button>
                 </div>
             );
         }
